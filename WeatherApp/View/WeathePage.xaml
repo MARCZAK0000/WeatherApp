@@ -71,6 +71,14 @@
                             <Button
                                 Style="{StaticResource MenuButton}"
                                 Command="{Binding SearchCity}">
+                                <Button.InputBindings>
+                                    <KeyBinding
+                                        Key="LeftAlt"
+                                        Command="{Binding SearchCity}"
+                                        CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
+
+
+                                </Button.InputBindings>
                                 <fa:FontAwesome Icon="LocationArrow"/>
                             </Button>
                             <StackPanel FlowDirection="LeftToRight"

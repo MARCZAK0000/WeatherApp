@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
@@ -76,6 +77,8 @@ namespace WeatherApp.ViewModel
         public ICommand OpenGithub { get; }
         public ICommand OpenTwitter { get; }
         public ICommand OpenFacebook { get; }
+
+        private readonly string _apiKey; 
         public WeatherPageViewModel()
         {
             SearchCityWeather(null);
@@ -84,6 +87,7 @@ namespace WeatherApp.ViewModel
             OpenGithub = new ViewModelCommand(OpenGitHubFunction, CanOpenTrue);
             OpenTwitter = new ViewModelCommand(OpenTwitterFunction, CanOpenTrue);
             OpenFacebook = new ViewModelCommand(OpenFacebookFunction, CanOpenTrue);
+            _apiKey = ConfigurationManager.AppSettings.GetKey(0);
         }
 
         private void OpenFacebookFunction(object obj)
@@ -122,10 +126,10 @@ namespace WeatherApp.ViewModel
 
         private async void SearchCityWeather(object obj)
         {
-            string cityCordUrl = $"http://api.openweathermap.org/geo/1.0/direct?q={CityName}&appid=4013666679d9e61d19e62e90cac58e2f";
+            string cityCordUrl = $"http://api.openweathermap.org/geo/1.0/direct?q={CityName}&appid={_apiKey}";
             FetchData = new FetchData();
             Cordinates = await FetchData.FetchCordinates(cityCordUrl);
-            string weatherCity = $"https://api.openweathermap.org/data/2.5/weather?lat={Cordinates.Lat}&lon={Cordinates.Lon}&appid=4013666679d9e61d19e62e90cac58e2f";
+            string weatherCity = $"https://api.openweathermap.org/data/2.5/weather?lat={Cordinates.Lat}&lon={Cordinates.Lon}&appid={_apiKey}";
             Weather = await FetchData.FetchWeather(weatherCity);
             BackgroundImg = new BackgroundImg(Weather.Describtion.ToLower());
             BackgroundImgPath = BackgroundImg.CloudType();
