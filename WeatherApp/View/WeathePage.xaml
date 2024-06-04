@@ -1,0 +1,249 @@
+﻿<Window x:Class="WeatherApp.View.WeathePage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa ="http://schemas.fontawesome.io/icons/"
+        xmlns:local="clr-namespace:WeatherApp.View"
+        xmlns:viewModel ="clr-namespace:WeatherApp.ViewModel"
+        xmlns:ImageConverter ="clr-namespace:WeatherApp.Model"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        Title="Weather App" Height="750" Width="1200">
+
+    <Window.Resources>
+        <ImageConverter:ImageConverter x:Key="Conveter"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <viewModel:WeatherPageViewModel/>
+    </Window.DataContext>
+    <Border>
+        <Border.Background>
+            <ImageBrush ImageSource="{Binding BackgroundImgPath, Converter={StaticResource Conveter}}"></ImageBrush>
+        </Border.Background>
+        <Border>
+            <Border.Background>
+                <LinearGradientBrush Opacity="0.7">
+                    <GradientStop Color="{StaticResource backgroundColor}"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="247*"/>
+                    <ColumnDefinition Width="153*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <!--Header-->
+                <Grid Grid.Row="0" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="8*"/>
+                    </Grid.ColumnDefinitions>
+
+
+
+                    <Grid Grid.Column="0">
+                        <StackPanel 
+                        Orientation="Horizontal"
+                        FlowDirection="RightToLeft"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center">
+                            <fa:FontAwesome Icon="Cloud"
+                                FontSize="25"
+                                Padding="0,5"
+                                FontWeight="Medium"/>
+                            <TextBlock Text="Weather App"
+                           FontSize="20"
+                           FontWeight="Medium"
+                           Padding="20,0"/>
+                        </StackPanel>
+                    </Grid>
+
+
+                    <Grid Grid.Column="1">
+                        <StackPanel Orientation="Horizontal"
+                                FlowDirection="RightToLeft"
+                                Margin="10,0">
+                            <Button
+                                Style="{StaticResource MenuButton}"
+                                Command="{Binding SearchCity}">
+                                <fa:FontAwesome Icon="LocationArrow"/>
+                            </Button>
+                            <StackPanel FlowDirection="LeftToRight"
+                                        Height="50">
+                                <TextBox Width="350"
+                                         Height="50"
+                                         Background="Transparent"
+                                         BorderThickness="2"
+                                         FontSize="25"
+                                         VerticalContentAlignment="Center"
+                                         Text="{Binding CityName, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <Button Style="{StaticResource MenuButton}"
+                                Command="{Binding RefreshSearchCity}">
+                                <fa:FontAwesome Icon="Refresh"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+
+                </Grid>
+
+                <Grid Grid.Row="1" Grid.ColumnSpan="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+
+                        <StackPanel HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Height="300"
+                                Width="500">
+                            <fa:FontAwesome Icon="Cloud"
+                                        FontSize="70"/>
+                            <TextBlock Style="{StaticResource mainInfoTextBlock}"
+                                   Text="{Binding Cordinates.City}"/>
+                            <TextBlock Text="{Binding Weather.Describtion}"
+                                   Style="{StaticResource mainInfoTextBlock}"/>
+                            <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    Margin="0, 5">
+                                <TextBlock Text="{Binding Weather.Temperature}"
+                                   Style="{StaticResource subInfoTextBlock}"/>
+                                <TextBlock Text="℃"
+                                   Style="{StaticResource subInfoTextBlock}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    Margin="0, 5">
+                                <TextBlock Text="Latitude: "
+                                   Style="{StaticResource subInfoTextBlock}"/>
+                                <TextBlock Text="{Binding Cordinates.Lat}"
+                                   Style="{StaticResource subInfoTextBlock}"/>
+
+
+                                <TextBlock Text="Longitude: "
+                                   Style="{StaticResource subInfoTextBlock}"
+                                    Padding="10,0,0,0"/>
+                                <TextBlock Text="{Binding Cordinates.Lon}"
+                                   Style="{StaticResource subInfoTextBlock}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <StackPanel HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource subInfoTextBlock}"
+                                           Text="Describtion: "/>
+                                    <TextBlock Style="{StaticResource subInfoTextBlock}"
+                                           Text="{Binding Weather.Describtion}"/>
+
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource subInfoTextBlock}"
+                                           Text="Temperature: "/>
+                                    <TextBlock Style="{StaticResource subInfoTextBlock}"
+                                           Text="{Binding Weather.Temperature}"/>
+                                    <TextBlock Style="{StaticResource subInfoTextBlock}"
+                                           Text="℃"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource subInfoTextBlock}"
+                                           Text="Perceptible Temperature: "/>
+                                    <TextBlock Style="{StaticResource subInfoTextBlock}"
+                                           Text="{Binding Weather.TemperatureFeels}"/>
+                                    <TextBlock Style="{StaticResource subInfoTextBlock}"
+                                           Text="℃"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <StackPanel HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource subInfoTextBlock}"
+                                           Text="Humidity: "/>
+                                    <TextBlock Style="{StaticResource subInfoTextBlock}"
+                                           Text="{Binding Weather.Humidity}"/>
+                                    <TextBlock Style="{StaticResource subInfoTextBlock}"
+                                           Text="%"/>
+
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource subInfoTextBlock}"
+                                           Text="Wind Speed: "/>
+                                    <TextBlock Style="{StaticResource subInfoTextBlock}"
+                                           Text="{Binding Weather.WindSpeed}"/>
+                                    <TextBlock Style="{StaticResource subInfoTextBlock}"
+                                           Text="km/h"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource subInfoTextBlock}"
+                                           Text="Pressure: "/>
+                                    <TextBlock Style="{StaticResource subInfoTextBlock}"
+                                           Text="{Binding Weather.Pressure}"/>
+                                    <TextBlock Style="{StaticResource subInfoTextBlock}"
+                                           Text="hPa"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <!--Footer-->
+                <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,594,0,0" Grid.RowSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="600"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Grid.Column="0">
+                        <TextBlock Text="Created by Jezbob1939"
+                               FontSize="25"
+                               FontWeight="Medium"
+                               Margin="5,0"/>
+                    </StackPanel>
+
+
+                    <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+                        <Button Style="{StaticResource LinkButton}"
+                            Margin="5,0"
+                            Command="{Binding OpenTwitter}">
+                            <fa:FontAwesome Icon="Twitter"/>
+                        </Button>
+                        <Button Style="{StaticResource LinkButton}"
+                            Margin="5,0"
+                            Command="{Binding OpenFacebook}">
+                            <fa:FontAwesome Icon="Facebook"/>
+                        </Button>
+                        <Button Style="{StaticResource LinkButton}"
+                            Margin="5,0"
+                            Command="{Binding OpenGithub}" Cursor="Hand">
+                            <fa:FontAwesome Icon="Github"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+            </Grid>
+        </Border>
+    </Border>
+
+
+</Window>

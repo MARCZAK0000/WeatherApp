@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    
+    
+    <!--Color for Border.background-->
+    <Color x:Key="backgroundColor">#345763</Color>
+    
+    
+    
+    
+    <!--Color for control-background-->
+    <SolidColorBrush x:Key="backgroundButtonColor1">#6b9750</SolidColorBrush>
+    <SolidColorBrush x:Key="backgroundButtonColor2">#aa8c48</SolidColorBrush>
+    
+    
+    
+    <!--Hover button color-->
+    <SolidColorBrush x:Key="hoverButtonColor">#d3c7ab</SolidColorBrush>
+    <SolidColorBrush x:Key="hoverButtonColor1">#baac86</SolidColorBrush>
+</ResourceDictionary>
